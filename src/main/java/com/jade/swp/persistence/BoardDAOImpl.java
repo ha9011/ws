@@ -21,6 +21,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String UPDATE = NS + ".update";
 	private static final String DELETE = NS + ".delete";
 	private static final String SELECT_ALL = NS + ".listAll";
+	private static final String GetMaxbno = NS + ".getMaxbno";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -45,6 +46,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<Board> listAll() throws Exception {
 		return session.selectList(SELECT_ALL);
+	}
+
+	@Override
+	public Integer getMaxbno() throws Exception {
+		return session.selectOne(GetMaxbno);
 	}
 
 }

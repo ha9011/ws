@@ -30,4 +30,8 @@
 		 where bno > 0 order by bno desc, regdate desc
 	</select>
 	
+	<select id="getMaxbno" resultType="Integer">
+		select max(bno) from Board
+	</select>
+	
 </mapper>

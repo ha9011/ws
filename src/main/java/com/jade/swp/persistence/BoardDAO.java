@@ -14,4 +14,6 @@ public interface BoardDAO {
 	public void delete(Integer bno) throws Exception;
 
 	public List<Board> listAll() throws Exception;
+
+	public Integer getMaxbno() throws Exception;
 }
