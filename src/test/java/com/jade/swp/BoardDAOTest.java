@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * BoardDAO Test Unit
+ * 
+ * @update 한글테스트 2018-08-17 by Jade
+ * @author jade
+ */
+
 import com.jade.swp.domain.Board;
 import com.jade.swp.persistence.BoardDAO;
 
