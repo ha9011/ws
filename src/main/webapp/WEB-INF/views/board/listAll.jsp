@@ -6,9 +6,34 @@
 
 <%@ include file="../header.jsp"%>
 
+<c:set var="resultMsg" value="" />
+<c:choose>
+    <c:when test="${msg eq 'success'}">
+        <c:set var="resultMsg" value="등록 되었습니다." />
+    </c:when>
+   
+    <c:when test="${msg eq 'dummy10-ok'}">
+        <c:set var="resultMsg" value="10개의 더미 데이터가 등록되었습니다." />
+    </c:when>
+
+    <c:otherwise>
+        
+    </c:otherwise>
+</c:choose>
+
+<c:if test="${ null ne msg }">
+    <div class="alert alert-success alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>와우!</strong> ${ resultMsg }
+	</div>
+</c:if>
+
+
+
 <section class="content">
 	<div class="row">
 		<div class="col-12 text-right">
+			<button onclick="dummy10()" class="btn btn-danger">Dummy10</button>
 			<a href="/board/register" class="btn btn-success">글쓰기</a>
 		</div>
 	</div>
@@ -42,9 +67,11 @@
 </section>
 
 <script>
-	var result = '${msg}';
-	if (result === 'success') {
-		alert("OK");
+	function dummy10() {
+		console.log("+++++++++++++++++++++++++")
+		if ( confirm("Are u sure??") ) {
+			window.location.href = "/board/dummy10";
+		}
 	}
 </script>
 

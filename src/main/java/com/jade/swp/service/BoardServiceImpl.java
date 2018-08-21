@@ -40,4 +40,13 @@ public class BoardServiceImpl implements BoardService {
 		return dao.listAll();
 	}
 
+	@Override
+	public void dummy10() throws Exception {
+		Integer maxbno = dao.getMaxbno();
+		for (int i = maxbno + 1; i <= maxbno + 10; i++) {
+			Board board = new Board("title" + i, "content" + i, "writer" + i);
+			dao.create(board);
+		}
+	}
+
 }
