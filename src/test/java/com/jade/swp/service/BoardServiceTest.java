@@ -25,7 +25,6 @@ public class BoardServiceTest {
 
 	@Test
 	public void testRead() throws Exception {
-		fail("Not yet implemented");
 		Board board = service.read(2);
 		logger.debug(board.toString());
 		assertEquals("새글제목", board.getTitle());
