@@ -30,8 +30,56 @@
 		 where bno > 0 order by bno desc, regdate desc
 	</select>
 	
+	<sql id="searchCondition">
+	     <if test="searchType != null">
+            <if test = "searchType == 't'.toString() ">
+               and title like concat('%', #{keyword},  '%')
+            </if>
+            <if test = "searchType == 'c'.toString() ">
+               and content like concat('%', #{keyword},  '%')
+            </if>
+            <if test = "searchType == 'w'.toString() ">
+               and writer like concat('%', #{keyword},  '%')
+            </if>
+            <if test = "searchType == 'tc'.toString() ">
+               and (
+                        title like concat('%', #{keyword},  '%')
+                     or content like concat('%', #{keyword},  '%') 
+                   )
+            </if>
+            <if test = "searchType == 'a'.toString() ">
+               and (
+                        title like concat('%', #{keyword},  '%')
+                     or content like concat('%', #{keyword},  '%')
+                     or writer like concat('%', #{keyword},  '%') 
+                   )
+            </if>
+         </if>
+	</sql>
+	<select id="listPage" resultType="Board">
+        select * from Board
+         where bno > 0
+         order by bno desc, regdate desc limit #{page}, 10
+    </select>
+    
+    <select id="listCriteria" resultType="Board">
+        select * from Board
+         where bno > 0
+         
+         <include refid="searchCondition"/>
+         
+         order by bno desc, regdate desc
+         limit #{pageStart}, #{perPageNum}
+    </select>
+	
 	<select id="getMaxbno" resultType="Integer">
 		select max(bno) from Board
 	</select>
+	
+	<select id="countPaging" resultType="Integer">
+        select count(bno) cnt from Board
+         where bno > 0
+         <include refid="searchCondition"/>
+    </select>
 	
 </mapper>

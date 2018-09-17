@@ -10,7 +10,7 @@
     }
 </script>
 
-    <form role="form" action="/board/update" method="post">
+    <form role="form" action="/board/update${criteria.makeQuery()}" method="post">
         <input type="hidden" name="bno" value="${ board.bno }" />
         <div class="box-body">
             <div class="form-group">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="box-footer">
-            <a href="/board/read?bno=${ board.bno }" class="btn btn-default">Cancel</a>
+            <a href="/board/read${criteria.makeQuery()}&bno=${board.bno}" class="btn btn-default">Cancel</a>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 

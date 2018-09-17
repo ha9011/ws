@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.jade.swp.domain.Board;
+import com.jade.swp.domain.Criteria;
 import com.jade.swp.persistence.BoardDAO;
 
 @Service
@@ -47,6 +48,16 @@ public class BoardServiceImpl implements BoardService {
 			Board board = new Board("title" + i, "content" + i, "writer" + i);
 			dao.create(board);
 		}
+	}
+
+	@Override
+	public List<Board> listCriteria(Criteria criteria) throws Exception {
+		return dao.listCriteria(criteria);
+	}
+
+	@Override
+	public int countPaging(Criteria criteria) {
+		return dao.countPaging(criteria);
 	}
 
 }

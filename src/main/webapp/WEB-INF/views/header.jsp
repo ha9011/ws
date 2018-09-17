@@ -26,6 +26,9 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    <link href="/resources/images/favicon.ico" rel="shortcut icon" type="image/png">
+    
+    <link href="/resources/style.css" rel="stylesheet" type="text/css" />
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>

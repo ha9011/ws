@@ -3,17 +3,23 @@ package com.jade.swp.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jade.swp.domain.Board;
+import com.jade.swp.domain.Criteria;
+import com.jade.swp.domain.PageMaker;
 import com.jade.swp.service.BoardService;
 
 @Controller
@@ -37,19 +43,30 @@ public class BoardController {
 //		model.addAttribute("result", "success");
 		rttr.addFlashAttribute("msg", "success");
 //		return "/board/success";
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void read(@RequestParam("bno") Integer bno, Model model) throws Exception {
+	public String read(
+			@RequestParam("bno") Integer bno,
+			@ModelAttribute("criteria") Criteria criteia,
+			HttpServletResponse response,
+			Model model) throws Exception {
 		logger.info("read GET .....");
 		Board board = service.read(bno);
 		logger.info(">>>> board.read: {}", board);
+		if (board == null) {
+			response.sendError(404);
+		}
+		logger.info("::>>>> board.read: {}", board);
+		
 		model.addAttribute(board);
+		return "/board/read";
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public void updateGet(@RequestParam("bno") Integer bno, Model model) throws Exception {
+	public void updateGet(@RequestParam("bno") Integer bno,
+			@ModelAttribute("criteria") Criteria criteria, Model model) throws Exception {
 		logger.info("update GET .....");
 		Board board = service.read(bno);
 		logger.info(">>>> board.update: {}", board);
@@ -57,19 +74,27 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updatePost(Board board, RedirectAttributes rttr) throws Exception {
+	public String updatePost(Board board, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		logger.info("update POST ..... {}", board.getBno());
 		service.modify(board);
 		rttr.addFlashAttribute("msg", "save-ok");
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		rttr.addAttribute("searchType", criteria.getSearchType());
+		rttr.addAttribute("keyword", criteria.getKeyword());
 		return "redirect:/board/read?bno=" + board.getBno();
 	}
 	
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rttr) throws Exception {
+	public String remove(@RequestParam("bno") Integer bno, Criteria criteria, RedirectAttributes rttr) throws Exception {
 		logger.info("remove GET .....");
 		service.remove(bno);
 		rttr.addFlashAttribute("msg", "remove-ok");
-		return "redirect:/board/listAll";
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+		rttr.addAttribute("searchType", criteria.getSearchType());
+		rttr.addAttribute("keyword", criteria.getKeyword());
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/listAll", method = RequestMethod.GET)
@@ -77,6 +102,20 @@ public class BoardController {
 		logger.info(">>>> listAll");
 		List<Board> boards = service.listAll();
 		model.addAttribute("list", boards);
+	}
+	
+	@RequestMapping(value="/listPage", method = RequestMethod.GET)
+	public void listPage(Criteria criteria, Model model) throws Exception {
+		logger.info(">>>> listPage {}", criteria);
+		List<Board> boards = service.listCriteria(criteria);
+		model.addAttribute("list", boards);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		int totalCount = service.countPaging(criteria);
+		logger.debug("totalCount=" + totalCount);
+		pageMaker.setTotalCount(totalCount);
+		model.addAttribute("pageMaker", pageMaker);
 	}
 	
 	@RequestMapping(value = "/dummy10", method = RequestMethod.GET)

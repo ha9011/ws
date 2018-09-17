@@ -1,5 +1,9 @@
 package com.jade.swp;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.After;
@@ -10,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * BoardDAO Test Unit
@@ -19,6 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 
 import com.jade.swp.domain.Board;
+import com.jade.swp.domain.Criteria;
 import com.jade.swp.persistence.BoardDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,6 +50,23 @@ public class BoardDAOTest {
 	}
 
 	@Test
+	public void testURI() throws Exception {
+		int bno = 207;
+		int perPageNum = 20;
+		UriComponents uriComponents = UriComponentsBuilder.newInstance()
+				.path("/board/read")
+				.queryParam("bno", bno)
+				.queryParam("perPageNum", perPageNum)
+				.build();
+		
+		String uri = "/board/read?bno=" + bno + "&perPageNum=" + perPageNum;
+		logger.info(uri );
+		logger.info(uriComponents.toString());
+		
+		assertEquals(uri, uriComponents.toString());
+	}
+	
+	@Test
 	public void testCreate() throws Exception {
 		Board board = dummyBoard("새글제목", "새글 내용");
 		System.out.println(board);
@@ -61,7 +85,7 @@ public class BoardDAOTest {
 		board.setBno(maxbno);
 		dao.update(board);
 		didUpdate = true;
-		
+
 		logger.info(dao.read(maxbno).toString());
 	}
 
@@ -78,6 +102,21 @@ public class BoardDAOTest {
 		dao.listAll();
 	}
 
+	@Test
+	public void testListPage() throws Exception {
+		List<Board> list = dao.listPage(3);
+		assertEquals(10, list.size());
+	}
+
+	@Test
+	public void testListCriteria() throws Exception {
+		Criteria criteria = new Criteria();
+		criteria.setPage(-1);
+		criteria.setPerPageNum(20);
+		List<Board> list = dao.listCriteria(criteria);
+		assertEquals(criteria.getPerPageNum(), list.size());
+	}
+	
 	private Board dummyBoard(String title, String content) {
 		Board board = new Board();
 		board.setTitle(title);
