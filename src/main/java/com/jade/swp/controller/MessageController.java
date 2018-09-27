@@ -2,8 +2,6 @@ package com.jade.swp.controller;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +14,9 @@ import com.jade.swp.domain.Message;
 import com.jade.swp.service.MessageService;
 
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/messages/*")
 public class MessageController {
-	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 	
 	@Inject
 	private MessageService service;
@@ -26,7 +24,7 @@ public class MessageController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<String> addMessage(@RequestBody Message message) {
 		ResponseEntity<String> entity = null;
-		logger.info("addMessage = {}", message);
+//		logger.info("addMessage = {}", message);
 		try {
 			service.addMessage(message);
 			entity = new ResponseEntity<>("SUCCESS ADD MSG", HttpStatus.OK);
@@ -42,7 +40,7 @@ public class MessageController {
 	public ResponseEntity<Message> readMessage(
 			@PathVariable String uid,
 			@PathVariable Integer mid) {
-		logger.info("ReadMessage uid, mid>> {}, {}", uid, mid);
+//		logger.info("ReadMessage uid, mid>> {}, {}", uid, mid);
 		service.ttt();
 		try {
 			Message message = service.readMessage(uid, mid);
@@ -51,6 +49,11 @@ public class MessageController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "/ttt", method = RequestMethod.GET)
+	public void tttMessage() {
+		service.ttt();
 	}
 
 }

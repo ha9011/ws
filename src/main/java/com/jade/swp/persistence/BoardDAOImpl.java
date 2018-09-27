@@ -1,6 +1,8 @@
 package com.jade.swp.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -26,6 +28,8 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String SELECT_CRITERIA = NS + ".listCriteria";
 	private static final String GetMaxbno = NS + ".getMaxbno";
 	private static final String COUNT_PAGING = NS + ".countPaging";
+	private static final String UPDATE_REPLYCNT = NS + ".updateReplycnt";
+	private static final String PLUS_VIEWCNT = NS + ".plusViewcnt";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -74,6 +78,19 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int countPaging(Criteria criteria) {
 		return session.selectOne(COUNT_PAGING, criteria);
+	}
+
+	@Override
+	public void updateReplycnt(Integer bno, int amt) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("bno", bno);
+		paramMap.put("amt", amt);
+		session.update(UPDATE_REPLYCNT, paramMap);
+	}
+
+	@Override
+	public void plusViewcount(Integer bno) {
+		session.update(PLUS_VIEWCNT, bno);
 	}
 
 }

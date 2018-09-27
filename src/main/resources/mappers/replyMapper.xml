@@ -37,5 +37,9 @@
     <select id="count" resultType="Integer">
         select count(*) from Reply where bno = #{bno}
     </select>
+    
+    <select id="getBno" resultType="Integer">
+        select bno from Reply where rno = #{rno}
+    </select>
 	
 </mapper>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var = "isTest" scope = "page" value = "${true}"/> <!-- QQQ -->
+<c:set var = "isTest" scope = "page" value = "${false}"/> <!-- QQQ -->
 
 <%@ include file="../header.jsp"%>
 
@@ -39,8 +39,8 @@
 	<script id="replies" type="text/x-handlebars-template" class="well">
 		<ul class="list-group">
           {{#each list}}
-			<a href="#" class="list-group-item" onclick="editReply({{rno}}, '{{replyer}}', '{{replytext}}')">
-			     {{replytext}}
+			<a href="#" class="list-group-item" onclick="editReply({{rno}}, '{{replyer}}', '{{transHtml replytext}}')">
+			     {{{transHtml replytext}}}
 			     <small class="text-muted pull-right">
                     {{fromNow regdate}}
                     <i class="fa fa-user ml10"></i> {{replyer}}
@@ -122,7 +122,7 @@
 
 <script src="../resources/handlebars-v4.0.12.js"></script>
 <script src="../resources/moment.min.js"></script>
-<script src="../resources/hbs.js"></script>
+<script src="../resources/hbs.js?ver=1"></script>
 <script src="../resources/reply.js?ver=5"></script>
 
 <c:if test="${ true eq isTest }">

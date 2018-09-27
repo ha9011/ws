@@ -38,6 +38,11 @@ Handlebars.registerHelper('fitTime', function(dt, options) {
 		
 });
 
+Handlebars.registerHelper('transHtml', function(str) {
+	if (!str) return str;
+	return str.replace(/[\r\n]/g, '<br>');
+});
+
 Handlebars.registerHelper('eqp', function(a, b, c, options) {
 	return a == b ? c : '';
 });

@@ -23,4 +23,8 @@ public interface BoardDAO {
 	Integer getMaxbno() throws Exception;
 
 	int countPaging(Criteria criteria);
+	
+	void updateReplycnt(Integer bno, int amt) throws Exception;
+
+	void plusViewcount(Integer bno);
 }

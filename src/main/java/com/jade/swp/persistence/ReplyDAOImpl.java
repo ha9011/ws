@@ -26,6 +26,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 	private static final String DELETE = NS + ".delete";
 	private static final String LIST_PAGE = NS + ".listPage";
 	private static final String COUNT = NS + ".count";
+	private static final String GET_BNO = NS + ".getBno";
 
 	@Override
 	public List<Reply> list(Integer bno) throws Exception {
@@ -63,6 +64,11 @@ public class ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public Reply read(Integer rno) {
 		return session.selectOne(READ, rno);
+	}
+
+	@Override
+	public int getBno(Integer rno) throws Exception {
+		return session.selectOne(GET_BNO, rno);
 	}
 
 }

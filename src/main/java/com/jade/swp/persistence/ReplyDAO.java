@@ -19,4 +19,6 @@ public interface ReplyDAO {
 	int count(Integer bno) throws Exception;
 
 	Reply read(Integer rno);
+	
+	int getBno(Integer rno) throws Exception;
 }

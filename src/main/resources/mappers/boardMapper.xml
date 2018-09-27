@@ -21,6 +21,16 @@
 		 where bno = #{bno}
 	</update>
 	
+	<update id="updateReplycnt">
+        update Board set replycnt = replycnt + #{amt}
+         where bno = #{bno}
+    </update>
+    
+    <update id="plusViewcnt">
+        update Board set viewcnt = viewcnt + 1
+         where bno = #{bno}
+    </update>
+    
 	<delete id="delete">
 		delete from Board where bno = #{bno}
 	</delete>
