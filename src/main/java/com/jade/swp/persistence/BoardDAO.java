@@ -29,4 +29,6 @@ public interface BoardDAO {
 	void plusViewcount(Integer bno);
 
 	void addAttach(String file);
+
+	List<String> getAttach(Integer bno);
 }

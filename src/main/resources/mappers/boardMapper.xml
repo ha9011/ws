@@ -20,6 +20,11 @@
 		 where bno = #{bno}
 	</select>
 	
+	<select id="getAttach" resultType="String">
+        select fullname from Attach
+         where bno = #{bno}
+    </select>
+	
 	<update id="update">
 		update Board set title = #{title},
 						 content = #{content}

@@ -21,4 +21,6 @@ public interface BoardService {
 	void dummy10() throws Exception;
 
 	int countPaging(Criteria criteria);
+
+	List<String> getAttach(Integer bno);
 }

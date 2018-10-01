@@ -3,8 +3,6 @@ package com.jade.swp.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -52,6 +50,23 @@ public class UploadController {
 			return new ResponseEntity<>(savedFileName, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/uploadAjaxes", method = RequestMethod.POST)
+	public ResponseEntity<String[]> uploadFormAJAXes(MultipartFile[] files, String type) throws Exception {
+		int len = files == null ? 0 : files.length;
+		logger.info("upload AJAXes .....files.length={}", len); 
+		
+		try {
+			String[] uploadedFiles = new String[len];
+			for (int i = 0; i < len; i++) {
+				uploadedFiles[i] = FileUtils.uploadFile(files[i], uploadPath);
+			}
+			return new ResponseEntity<>(uploadedFiles, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new String[] { e.getMessage() }, HttpStatus.BAD_REQUEST);
 		}
 	}
 	

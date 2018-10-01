@@ -31,6 +31,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String UPDATE_REPLYCNT = NS + ".updateReplycnt";
 	private static final String PLUS_VIEWCNT = NS + ".plusViewcnt";
 	private static final String ADD_ATTACH = NS + ".addAttach";
+	private static final String GET_ATTACH = NS + ".getAttach";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -97,6 +98,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void addAttach(String file) {
 		session.insert(ADD_ATTACH, file);
+	}
+
+	@Override
+	public List<String> getAttach(Integer bno) {
+		return session.selectList(GET_ATTACH, bno);
 	}
 
 }

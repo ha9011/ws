@@ -72,4 +72,9 @@ public class BoardServiceImpl implements BoardService {
 		return dao.countPaging(criteria);
 	}
 
+	@Override
+	public List<String> getAttach(Integer bno) {
+		return dao.getAttach(bno);
+	}
+
 }

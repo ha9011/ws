@@ -36,6 +36,10 @@
 		</div>
 	</div>
 
+	<ul class="mailbox-attachments clearfix uploadedList">
+	    <%@ include file="uploadedFiles.jsp"%>	
+	</ul>
+
 	<script id="replies" type="text/x-handlebars-template" class="well">
 		<ul class="list-group">
           {{#each list}}
@@ -120,15 +124,13 @@
   </div>
 </script>
 
-<script src="../resources/handlebars-v4.0.12.js"></script>
-<script src="../resources/moment.min.js"></script>
-<script src="../resources/hbs.js?ver=1"></script>
 <script src="../resources/reply.js?ver=5"></script>
 
 <c:if test="${ true eq isTest }">
 <script src="../resources/test/replytest.js"></script>
 </c:if>
 
+<script src="/resources/upload.js?ver=1"></script>
 <script>
 $(document).ready(	function() {
 	// var $boxFooter = $("section.content div.box-footer");
@@ -142,8 +144,24 @@ $(document).ready(	function() {
 	listPage(1, '${board.bno}'); // QQQ
 
 	//$('#myModal').modal('show');
+	
+	sendAjax("/board/getAttach/${board.bno}", (isSuccess, res) => {
+        if (isSuccess) {
+        	let upfiles = []; // array of jsonData
+        	res.forEach( rj => {
+                let jsonData = getFileInfo(rj);
+                upfiles.push(jsonData);
+            });
+        	renderHbs('template', {upFiles: upfiles });
+        } else {
+            console.debug("Error on getAttach>>", res);
+        }
+    });
 });
 </script>
+
+
+
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <script type="text/babel">
 const fn = ii => ii *2;

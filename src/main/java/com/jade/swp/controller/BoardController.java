@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jade.swp.domain.Board;
@@ -62,6 +62,13 @@ public class BoardController {
 		
 		model.addAttribute(board);
 		return "/board/read";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getAttach/{bno}", method = RequestMethod.GET)
+	public List<String> read(@PathVariable ("bno") Integer bno) throws Exception {
+		logger.info("getAttach ..... bno={}", bno);
+		return service.getAttach(bno);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
