@@ -27,4 +27,6 @@ public interface BoardDAO {
 	void updateReplycnt(Integer bno, int amt) throws Exception;
 
 	void plusViewcount(Integer bno);
+
+	void addAttach(String file);
 }

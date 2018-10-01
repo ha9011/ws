@@ -10,6 +10,11 @@
 		           values( #{title}, #{writer}, #{content} )
 	</insert>
 	
+	<insert id="addAttach">
+        insert into Attach(  bno, fullname )
+                   values( last_insert_id(), #{fullname} )
+    </insert>
+	
 	<select id="read" resultType="com.jade.swp.domain.Board">
 		select * from Board
 		 where bno = #{bno}

@@ -30,6 +30,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String COUNT_PAGING = NS + ".countPaging";
 	private static final String UPDATE_REPLYCNT = NS + ".updateReplycnt";
 	private static final String PLUS_VIEWCNT = NS + ".plusViewcnt";
+	private static final String ADD_ATTACH = NS + ".addAttach";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -91,6 +92,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void plusViewcount(Integer bno) {
 		session.update(PLUS_VIEWCNT, bno);
+	}
+
+	@Override
+	public void addAttach(String file) {
+		session.insert(ADD_ATTACH, file);
 	}
 
 }

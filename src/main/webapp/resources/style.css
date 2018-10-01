@@ -11,6 +11,18 @@
     display: none;
 }
 
+.fileDrop {
+	width: 80%;
+	height: 100px;
+	border: 1px dotted gray;
+	background-color: lightslategrey;
+	margin: auto;
+}
+
+.has-img img {
+	height: 100px !important;
+}
+
 .pageination {
 	list-style: none;
 }

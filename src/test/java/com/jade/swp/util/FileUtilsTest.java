@@ -16,7 +16,7 @@ public class FileUtilsTest {
 
 	private static final String uploadRootPath = "/Users/jade/workspace/lecture/tjespring/uploads";
 	
-	@Ignore @Test
+	@Test
 	public void test() {
 		assertTrue(existsDir(uploadRootPath));
 		

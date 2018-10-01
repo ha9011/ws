@@ -28,10 +28,17 @@
     
     <link href="/resources/images/favicon.ico" rel="shortcut icon" type="image/png">
     
-    <link href="/resources/style.css" rel="stylesheet" type="text/css" />
+    <link href="/resources/style.css?ver=2" rel="stylesheet" type="text/css" />
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/resources/plugins/jQuery/jQuery.form.min.js"></script>
+    <script src="/resources/handlebars-v4.0.12.js"></script>
+    <script src="/resources/moment.min.js"></script>
+    <script src="/resources/hbs.js?ver=2"></script>
+    <script src="/resources/ajax.js?ver=1"></script>
+    
+    
   <body class="skin-blue sidebar-mini">
     <div class="wrapper">
       

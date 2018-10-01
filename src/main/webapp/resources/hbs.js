@@ -1,11 +1,15 @@
-const Templates = {},
-	  $htmls = $('script[type="text/x-handlebars-template"]');
+const Templates = {};
 
-$htmls.each( (idx, h) => {
-	let tid = $(h).attr('id');
-	Templates[tid] = Handlebars.compile($(h).html());
+$(document).ready( e => {
+	const $htmls = $('script[type="text/x-handlebars-template"]');
+	console.log("$htmls>>", $htmls)
+	$htmls.each( (idx, h) => {
+		let tid = $(h).attr('id');
+		console.debug("tid>>", tid)
+		Templates[tid] = Handlebars.compile($(h).html());
+	});
 });
-
+	  
 let renderHbs = function(tid, jsonData, tag) {
 	tag = tag || 'div';
     let $tmpl = $('#' + tid); // "#" + "tmpl2"

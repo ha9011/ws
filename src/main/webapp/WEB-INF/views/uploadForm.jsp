@@ -28,9 +28,10 @@
     <div class="fileDrop"><p>Drop Hear!!</p></div>
     <div class="uploadedList"></div>
     
-    <form action="uploadAjax" id="form3" method="POST" enctype="multipart/form-data">
+    <form action="uploadAjaxes" id="form3" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="type" value="ajax" />
-        <input type="file" name="file" id="ajax-file" style="display:none;" />
+        <!-- <input type="file" name="file[]" id="ajax-file" style="display:none;" /> -->
+        <input type="file" name="files" id="ajax-file" style="display: none;" />
         <input type="submit" value="ajax로 제출" />
     </form>
     <div id="percent">0 %</div>
