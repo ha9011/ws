@@ -11,12 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jade.swp.domain.Board;
 import com.jade.swp.domain.Criteria;
 import com.jade.swp.persistence.BoardDAO;
+import com.jade.swp.persistence.ReplyDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Inject
 	private BoardDAO dao;
+	
+	@Inject
+	private ReplyDAO replyDao;
 
 	@Transactional
 	@Override
@@ -43,8 +47,11 @@ public class BoardServiceImpl implements BoardService {
 		dao.update(board);
 	}
 
+	@Transactional
 	@Override
 	public void remove(Integer bno) throws Exception {
+		dao.deleteAllAttaches(bno);
+		replyDao.deleteAll(bno);
 		dao.delete(bno);
 	}
 

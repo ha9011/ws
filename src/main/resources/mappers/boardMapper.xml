@@ -28,6 +28,10 @@
     <delete id="delAttach">
         delete from Attach where fullname = #{fullname}
     </delete>
+    
+    <delete id="deleteAllAttaches">
+        delete from Attach where bno = #{bno}
+    </delete>
 	
 	<select id="read" resultType="com.jade.swp.domain.Board">
 		select * from Board
