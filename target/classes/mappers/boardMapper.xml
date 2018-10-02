@@ -15,15 +15,19 @@
                    values( last_insert_id(), #{fullname} )
     </insert>
 	
-	<select id="read" resultType="com.jade.swp.domain.Board">
-		select * from Board
-		 where bno = #{bno}
-	</select>
-	
 	<select id="getAttach" resultType="String">
         select fullname from Attach
          where bno = #{bno}
     </select>
+    
+    <delete id="delAttach">
+        delete from Attach where fullname = #{fullname}
+    </delete>
+	
+	<select id="read" resultType="com.jade.swp.domain.Board">
+		select * from Board
+		 where bno = #{bno}
+	</select>
 	
 	<update id="update">
 		update Board set title = #{title},

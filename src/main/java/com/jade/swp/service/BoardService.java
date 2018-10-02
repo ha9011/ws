@@ -23,4 +23,6 @@ public interface BoardService {
 	int countPaging(Criteria criteria);
 
 	List<String> getAttach(Integer bno);
+
+	void removeAttach(String fileName);
 }

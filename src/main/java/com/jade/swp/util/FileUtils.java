@@ -71,6 +71,28 @@ public class FileUtils {
 		
 		return thumbnailName.substring(uploadRootPath.length()).replace(File.separatorChar, '/');
 	}
+	
+	public static String mamkeCrop(String uploadRootPath, String dirname, String filename) throws IOException {
+		BufferedImage srcImg = ImageIO.read(new File(dirname, filename));
+		
+		int w = srcImg.getWidth();  // 600
+		int h = srcImg.getHeight(); // 400
+		int min = Math.min(w, h);   // 400
+		
+		// (100, 0)에서 부터 가로 400, 세로 400 만큼 크롭하라!!
+		//                                            100,          0,     ~400, ~400
+		BufferedImage tmpImg = Scalr.crop(srcImg, (w - min)/2, (h - min)/2, min, min);
+		
+		BufferedImage destImg = Scalr.resize(tmpImg, Scalr.Method.AUTOMATIC,
+				Scalr.Mode.FIT_TO_HEIGHT, 300);
+		
+		String ext = getFileExtension(filename);
+		String cropName = dirname + File.separator + "c_" + filename;
+		File newFile = new File(cropName);
+		ImageIO.write(destImg, ext.toUpperCase(), newFile);
+		
+		return cropName.substring(uploadRootPath.length()).replace(File.separatorChar, '/');
+	}
 
 	public static String getFileExtension(String filename) {
 		return filename.substring(filename.lastIndexOf(".") + 1);

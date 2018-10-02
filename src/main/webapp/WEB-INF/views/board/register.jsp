@@ -28,8 +28,6 @@
 			     <div id="percent">0 %</div>
                  <div id="status">ready</div>
 			   </div>
-			   
-			     
 		    </div>
 		</div> <!-- end of box-body -->
 		
@@ -50,9 +48,5 @@
     </form>
 
 
-<script src="/resources/upload.js?ver=1"></script>
-<script>
-gIsEditing = true;
-</script>
 <%@ include file="../footer.jsp"%>
 </html>

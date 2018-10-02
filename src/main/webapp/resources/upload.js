@@ -1,6 +1,9 @@
 const $fileDrop = $('div.fileDrop');
 
-let gIsEditing = false;
+let gUri = window.location.pathname,
+	gIsRegister = gUri.indexOf('/register') !== -1,
+	gIsUpdate = gUri.indexOf('/update') !== -1,
+	gIsEditing = gIsRegister || gIsUpdate;
 
 $fileDrop.on('dragover dragenter', (evt) => {
     evt.preventDefault();
@@ -57,9 +60,17 @@ $('#form_attach').ajaxForm({
     }
 });
 
-function deleteFile(fullName) {
+function deleteFile(fullName, bno) {
 	let fileInfo = getFileInfo(fullName);
-	sendAjax("/deleteFile?fileName=" + fullName, (isSuccess, res) => {
+	console.debug("bno>>>>>", bno)
+	if (!confirm("삭제된 파일은 복구되지 않습니다. 그래도 삭제하시겠어요??"))
+		return;
+	
+	let url = "/deleteFile?fileName=" + fullName;
+	if (bno)
+		url += "&bno=" + bno;
+	
+	sendAjax(url, (isSuccess, res) => {
         if (isSuccess) {
             alert(fileInfo.fileName + " Removed.");
             
@@ -102,7 +113,7 @@ function getFileInfo(fullName) {
 	// 실제파일명 (fileLink = asdfsafsdafdsaf_realname.ext)
 	fileName = fileLink.substring(fileLink.indexOf('_') + 1);
 	let fileId = fileLink.substring(0, fileLink.indexOf('_'));
-	console.debug("fileId>>", fileId)
+//	console.debug("fileId>>", fileId)
 	
 	return {
 	    fileName: fileName,

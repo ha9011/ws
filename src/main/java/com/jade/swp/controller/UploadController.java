@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -21,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jade.swp.service.BoardService;
 import com.jade.swp.util.FileUtils;
 
 @Controller
 public class UploadController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+	
+	@Inject
+	private BoardService service;
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -66,16 +71,21 @@ public class UploadController {
 			}
 			return new ResponseEntity<>(uploadedFiles, HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(new String[] { e.getMessage() }, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/deleteFile", method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteFile(String fileName) throws Exception {
-		logger.info("deleteFile.....fileName={}", fileName);
+	public ResponseEntity<String> deleteFile(String fileName, Integer bno) throws Exception {
+		logger.info("deleteFile.....fileName={}, bno={}", fileName, bno);
 		
 		try {
+			if (bno > 0) {
+				service.removeAttach(fileName);
+			}
+			
 			boolean isImage = FileUtils.getMediaType(FileUtils.getFileExtension(fileName)) != null;
 			File file = new File(uploadPath + fileName);
 			file.delete();

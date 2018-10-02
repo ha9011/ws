@@ -130,7 +130,6 @@
 <script src="../resources/test/replytest.js"></script>
 </c:if>
 
-<script src="/resources/upload.js?ver=1"></script>
 <script>
 $(document).ready(	function() {
 	// var $boxFooter = $("section.content div.box-footer");
@@ -145,18 +144,7 @@ $(document).ready(	function() {
 
 	//$('#myModal').modal('show');
 	
-	sendAjax("/board/getAttach/${board.bno}", (isSuccess, res) => {
-        if (isSuccess) {
-        	let upfiles = []; // array of jsonData
-        	res.forEach( rj => {
-                let jsonData = getFileInfo(rj);
-                upfiles.push(jsonData);
-            });
-        	renderHbs('template', {upFiles: upfiles });
-        } else {
-            console.debug("Error on getAttach>>", res);
-        }
-    });
+    showAttaches(${board.bno});	
 });
 </script>
 

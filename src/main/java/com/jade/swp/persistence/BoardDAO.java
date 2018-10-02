@@ -31,4 +31,6 @@ public interface BoardDAO {
 	void addAttach(String file);
 
 	List<String> getAttach(Integer bno);
+
+	void deleteAttach(String fileName);
 }

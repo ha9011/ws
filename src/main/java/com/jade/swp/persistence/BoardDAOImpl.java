@@ -32,6 +32,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String PLUS_VIEWCNT = NS + ".plusViewcnt";
 	private static final String ADD_ATTACH = NS + ".addAttach";
 	private static final String GET_ATTACH = NS + ".getAttach";
+	private static final String DEL_ATTACH = NS + ".delAttach";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -103,6 +104,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List<String> getAttach(Integer bno) {
 		return session.selectList(GET_ATTACH, bno);
+	}
+
+	@Override
+	public void deleteAttach(String fileName) {
+		session.delete(DEL_ATTACH, fileName);
 	}
 
 }

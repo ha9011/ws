@@ -29,6 +29,18 @@
             </div>
 
         </div>
+        
+        <div class="form-group">
+           <label for="">File Drop Here!</label>
+           <div class="fileDrop text-right">
+             <div id="percent">0 %</div>
+             <div id="status">ready</div>
+           </div>
+        </div>
+        
+        <ul class="mailbox-attachments clearfix uploadedList">
+            <%@ include file="uploadedFiles.jsp"%>  
+        </ul>
 
         <div class="box-footer">
             <a href="/board/read${criteria.makeQuery()}&bno=${board.bno}" class="btn btn-default">Cancel</a>
@@ -36,6 +48,10 @@
         </div>
 
     </form>
+        
+<script>
+showAttaches(${board.bno});
+</script>
 
 <%@ include file="../footer.jsp"%>
 </html>

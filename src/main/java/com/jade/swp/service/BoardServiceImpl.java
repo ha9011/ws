@@ -77,4 +77,9 @@ public class BoardServiceImpl implements BoardService {
 		return dao.getAttach(bno);
 	}
 
+	@Override
+	public void removeAttach(String fileName) {
+		dao.deleteAttach(fileName);
+	}
+
 }
