@@ -28,12 +28,11 @@
 function showAttaches(bno) {
 	sendAjax("/board/getAttach/" + bno, (isSuccess, res) => {
 	    if (isSuccess) {
-	        let upfiles = []; // array of jsonData
 	        res.forEach( rj => {
 	            let jsonData = getFileInfo(rj);
-	            upfiles.push(jsonData);
+	            gUpFiles.push(jsonData);
 	        });
-	        renderHbs('template', {upFiles: upfiles });
+	        renderHbs('template', {upFiles: gUpFiles });
 	    } else {
 	        console.debug("Error on getAttach>>", res);
 	    }

@@ -82,4 +82,11 @@ public class BoardServiceImpl implements BoardService {
 		dao.deleteAttach(fileName);
 	}
 
+	@Transactional
+	@Override
+	public void appendAttach(String[] fullNames, Integer bno) {
+		for (String fullName : fullNames)
+			dao.appendAttach(fullName, bno);
+	}
+
 }

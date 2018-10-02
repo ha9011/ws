@@ -14,6 +14,11 @@
         insert into Attach(  bno, fullname )
                    values( last_insert_id(), #{fullname} )
     </insert>
+    
+    <insert id="appendAttach">
+        insert into Attach(  bno,    fullname )
+                   values( #{bno}, #{fullname} )
+    </insert>
 	
 	<select id="getAttach" resultType="String">
         select fullname from Attach

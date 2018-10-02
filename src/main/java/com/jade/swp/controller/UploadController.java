@@ -60,15 +60,20 @@ public class UploadController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/uploadAjaxes", method = RequestMethod.POST)
-	public ResponseEntity<String[]> uploadFormAJAXes(MultipartFile[] files, String type) throws Exception {
+	public ResponseEntity<String[]> uploadFormAJAXes(MultipartFile[] files, Integer bno) throws Exception {
 		int len = files == null ? 0 : files.length;
-		logger.info("upload AJAXes .....files.length={}", len); 
+		logger.info("upload AJAXes .....files.length={}, bno={}", len, bno); 
 		
 		try {
 			String[] uploadedFiles = new String[len];
 			for (int i = 0; i < len; i++) {
 				uploadedFiles[i] = FileUtils.uploadFile(files[i], uploadPath);
 			}
+			
+			if (bno > 0 ) {
+				service.appendAttach(uploadedFiles, bno);
+			}
+			
 			return new ResponseEntity<>(uploadedFiles, HttpStatus.CREATED);
 		} catch (Exception e) {
 			e.printStackTrace();

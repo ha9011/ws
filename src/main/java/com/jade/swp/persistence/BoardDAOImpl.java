@@ -33,6 +33,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static final String ADD_ATTACH = NS + ".addAttach";
 	private static final String GET_ATTACH = NS + ".getAttach";
 	private static final String DEL_ATTACH = NS + ".delAttach";
+	private static final String APPEND_ATTACH = NS + ".appendAttach";
 
 	@Override
 	public void create(Board board) throws Exception {
@@ -109,6 +110,14 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void deleteAttach(String fileName) {
 		session.delete(DEL_ATTACH, fileName);
+	}
+
+	@Override
+	public void appendAttach(String fullName, Integer bno) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("bno", bno);
+		paramMap.put("fullname", fullName);
+		session.insert(APPEND_ATTACH, paramMap);
 	}
 
 }
