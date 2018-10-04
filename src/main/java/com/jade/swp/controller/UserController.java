@@ -1,13 +1,20 @@
 package com.jade.swp.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jade.swp.domain.User;
 import com.jade.swp.dto.LoginDTO;
@@ -32,7 +39,7 @@ public class UserController {
 		
 		try {
 			User user = service.login(dto);
-			if (user != null) { // login fail
+			if (user != null) { 
 				model.addAttribute("user", user);
 				
 			} else {
@@ -40,6 +47,43 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/logoutAjax", method=RequestMethod.GET)
+	public ResponseEntity<String> logoutAjax(HttpSession session) {
+		logger.info("Logout Ajax>> " + session.getAttribute("loginUser"));
+		session.removeAttribute("loginUser");
+		return new ResponseEntity<>("logouted", HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/loginAjax", method = RequestMethod.POST)
+	public ResponseEntity<User> loginAjax(@RequestBody LoginDTO dto, HttpSession session, HttpServletResponse response) throws Exception {
+		logger.info("loginPost...LoginDTO={}", dto); 
+		
+		try {
+			User user = service.login(dto);
+			if (user != null) { // login success
+				user.setUpw(null);
+				
+				session.setAttribute("loginUser", user);
+				
+				Cookie loginCookie = new Cookie("loginCookie", session.getId());
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(7 * 24 * 60 * 60);
+				
+				response.addCookie(loginCookie);
+				
+				return new ResponseEntity<>(user, HttpStatus.OK);
+				
+			} else {
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 	}
 	

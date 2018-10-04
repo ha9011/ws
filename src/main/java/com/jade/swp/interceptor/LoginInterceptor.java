@@ -1,15 +1,12 @@
 package com.jade.swp.interceptor;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.jade.swp.domain.Board;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter implements SessionNames {
 	
@@ -32,9 +29,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter implements Sessi
 	@Override
 	public void postHandle(
 			HttpServletRequest request, HttpServletResponse response, 
-			Object handler, ModelAndView modelAndView)
-			throws Exception {
+			Object handler, ModelAndView modelAndView) throws Exception {
 		
+		HandlerMethod method = (HandlerMethod) handler;
+		System.out.println("MMMM>> Bean: " + method.getBean() + ", Method: " + method.getMethod());
+		System.out.println("MMMM>> Model: " + modelAndView);
 		
 		HttpSession session = request.getSession();
 		

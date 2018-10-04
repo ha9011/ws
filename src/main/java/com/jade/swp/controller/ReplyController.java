@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jade.swp.domain.Criteria;
 import com.jade.swp.domain.PageMaker;
 import com.jade.swp.domain.Reply;
+import com.jade.swp.domain.User;
 import com.jade.swp.service.ReplyService;
 
 @RestController
@@ -30,9 +32,16 @@ public class ReplyController {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyController.class);
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<String> register(@RequestBody Reply reply) {
+	public ResponseEntity<String> register(@RequestBody Reply reply, HttpSession session) {
 		logger.debug("ReplyRegister>> {}", reply);
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		logger.info("ReplyController.POST={}", loginUser);
 		try {
+			if (loginUser == null)
+				return new ResponseEntity<>("Not LoggedIn", HttpStatus.UNAUTHORIZED);
+			
+			reply.setReplyer(loginUser.getUname());
 			service.addReply(reply);
 			return new ResponseEntity<>("success111", HttpStatus.OK);
 		} catch (Exception e) {
