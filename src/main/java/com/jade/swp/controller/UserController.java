@@ -1,7 +1,10 @@
 package com.jade.swp.controller;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.jade.swp.domain.User;
 import com.jade.swp.dto.LoginDTO;
+import com.jade.swp.interceptor.SessionNames;
 import com.jade.swp.service.UserService;
 
 @Controller
@@ -52,15 +57,31 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="/logoutAjax", method=RequestMethod.GET)
-	public ResponseEntity<String> logoutAjax(HttpSession session) {
+	public ResponseEntity<String> logoutAjax(HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session) {
 		logger.info("Logout Ajax>> " + session.getAttribute("loginUser"));
 		session.removeAttribute("loginUser");
+		
+		User user = (User)session.getAttribute(SessionNames.LOGIN);
+		if (user != null) {
+			session.removeAttribute(SessionNames.LOGIN);
+			session.invalidate();
+			
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if (loginCookie != null) {
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+			}
+		}
+		
 		return new ResponseEntity<>("logouted", HttpStatus.OK);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/loginAjax", method = RequestMethod.POST)
-	public ResponseEntity<User> loginAjax(@RequestBody LoginDTO dto, HttpSession session, HttpServletResponse response) throws Exception {
+	public ResponseEntity<User> loginAjax(@RequestBody LoginDTO dto, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("loginPost...LoginDTO={}", dto); 
 		
 		try {
