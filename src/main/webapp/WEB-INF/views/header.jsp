@@ -28,7 +28,7 @@
     
     <link href="/resources/images/favicon.ico" rel="shortcut icon" type="image/png">
     
-    <link href="/resources/style.css?ver=2" rel="stylesheet" type="text/css" />
+    <link href="/resources/style.css?ver=3" rel="stylesheet" type="text/css" />
   </head>
       <!-- jQuery 2.1.4 -->
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>

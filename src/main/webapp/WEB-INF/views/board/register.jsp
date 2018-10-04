@@ -6,7 +6,8 @@
 	<form role="form" method="post">
 		<div class="box-body">
 			<div class="form-group">
-				<label for="title">제목</label> <input type="text" id="title"
+				<label for="title">제목</label>
+				<input type="text" id="title"
 					name="title" class="form-control" placeholder="title..." />
 			</div>
 
