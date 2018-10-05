@@ -11,4 +11,6 @@ public interface UserService {
 
 	void keepLogin(String uid, String id, Date expire);
 
+	User checkLoginBefore(String value);
+
 }

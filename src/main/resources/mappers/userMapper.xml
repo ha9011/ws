@@ -14,4 +14,10 @@
          where uid = #{uid}
     </update>
     
+    <select id="checkLoginBefore" resultType="com.jade.swp.domain.User">
+        select * from User
+         where sessionkey = #{loginCookie}
+           and sessionlimit > now()
+    </select>
+    
 </mapper>

@@ -21,6 +21,7 @@ public class UserDAOImpl implements UserDAO {
 	private static final String NS = "com.jade.swp.persistence.UserMapper";
 	private static final String LOGIN = NS + ".login";
 	private static final String KEEP_LOGIN = NS + ".keepLogin";
+	private static final String CHECK_LOGIN_BEFORE = NS + ".checkLoginBefore";
 
 	@Override
 	public User login(LoginDTO dto) throws Exception {
@@ -34,6 +35,11 @@ public class UserDAOImpl implements UserDAO {
 		paramMap.put("sessionkey", sessionId);
 		paramMap.put("sessionlimit", expire);
 		session.update(KEEP_LOGIN, paramMap);
+	}
+
+	@Override
+	public User checkLoginBefore(String loginCookie) {
+		return session.selectOne(CHECK_LOGIN_BEFORE, loginCookie);
 	}
 
 }

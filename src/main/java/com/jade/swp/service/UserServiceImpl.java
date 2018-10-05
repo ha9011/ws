@@ -22,8 +22,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void keepLogin(String uid, String id, Date expire) {
-		dao.keepLogin(uid, id, expire);
+	public void keepLogin(String uid, String sessionId, Date expire) {
+		dao.keepLogin(uid, sessionId, expire);
+	}
+
+	@Override
+	public User checkLoginBefore(String loginCookie) {
+		return dao.checkLoginBefore(loginCookie);
 	}
 
 }
