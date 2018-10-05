@@ -15,10 +15,11 @@ function listPage(page, bno) {
 	let url = "/replies/" + gBno + "/" + page;
 //	console.log("url>>>", url)
 	sendAjax(url, (isSuccess, res) => {
-//		console.debug("listPage:res>>", res);
+		console.debug("listPage:res>>", res);
 		if (isSuccess) {
 			res.currentPage = page;
 			res.pageData = makePageData(res.pageMaker);
+			res.loginUid = res.loginUid;
 //			console.log("res>>", res.pageData)
 			renderHbs("replies", res);
 		}
@@ -79,15 +80,22 @@ const checkEdit = () => {
 	
 };
 
-function editReply(rno, replyer, replytext) {
+function editReply(loginUid, rno, replyer, replytext) {
 	event.preventDefault();
+	
+	console.debug("QQQQ>>", loginUid, rno, replyer, replytext)
 	gIsEdit = !!rno;
 	gRno = rno;
 	gReplytext = replytext;
 	
+	if (loginUid && replyer && loginUid !== replyer) {
+		alert('본인이 작성한 댓글만 수정 가능합니다!');
+		return;
+	}
+	
 	renderHbs('myModal', {
 		gIsEdit: gIsEdit,
-		replyer: replyer,
+		replyer: replyer || loginUid,
 		replytext: replytext
 	});
 	

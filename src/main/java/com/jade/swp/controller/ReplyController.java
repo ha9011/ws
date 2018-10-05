@@ -75,8 +75,8 @@ public class ReplyController {
 	
 	@RequestMapping(value = "/{bno}/{page}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> listPage(
-			@PathVariable Integer bno,
-			@PathVariable Integer page) {
+			@PathVariable Integer bno, @PathVariable Integer page,
+			HttpSession session) {
 		logger.debug("ReplyListPage bno, page>> {}, {}", bno, page);
 		Map<String, Object> resultMap = new HashMap<>();
 		try {
@@ -88,6 +88,10 @@ public class ReplyController {
 			pageMaker.setCriteria(criteria);
 			pageMaker.setTotalCount(service.count(bno));
 			resultMap.put("pageMaker", pageMaker);
+			
+			User loginUser = (User)session.getAttribute(SessionNames.LOGIN);
+			if (loginUser != null)
+				resultMap.put("loginUid", loginUser.getUid());
 			
 			return new ResponseEntity<>(resultMap, HttpStatus.OK);
 		} catch (Exception e) {

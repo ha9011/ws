@@ -43,7 +43,7 @@
 	<script id="replies" type="text/x-handlebars-template" class="well">
 		<ul class="list-group">
           {{#each list}}
-			<a href="#" class="list-group-item" onclick="editReply({{rno}}, '{{replyer}}', '{{transHtml replytext}}')">
+			<a href="#" class="list-group-item" onclick="editReply('{{../loginUid}}', {{rno}}, '{{replyer}}', '{{transHtml replytext}}')">
 			     {{{transHtml replytext}}}
 			     <small class="text-muted pull-right">
                     {{fromNow regdate}}
@@ -80,7 +80,9 @@
           {{/if}}
 		  </ul>
 
-          <button onclick="editReply()" class="btn btn-success pull-right">댓글쓰기</button>
+          {{#if loginUid}}
+             <button onclick="editReply('{{loginUid}}')" class="btn btn-success pull-right">댓글쓰기</button>
+          {{/if}}
 		</nav>
 	</script>
 
@@ -103,7 +105,9 @@
       </div>
       <div class="modal-body">
         <div>
-            작성자<input type="text" name="replyer" id="replyer" onkeyup="checkEdit()" value="{{replyer}}" {{#if gIsEdit}}readonly{{/if}} class="form-control" />
+            작성자
+            <input type="text" name="replyer" id="replyer" onkeyup="checkEdit()"
+             value="{{replyer}}" {{#if gIsEdit}}readonly{{/if}} class="form-control" readonly />
         </div>
         <div class="mt10">
             내용<textarea name="replytext" id="replytext" onkeyup="checkEdit()" rows="3" class="form-control">{{replytext}}</textarea>
@@ -126,7 +130,7 @@
   </div>
 </script>
 
-<script src="../resources/reply.js?ver=5"></script>
+<script src="../resources/reply.js?ver=6"></script>
 
 <c:if test="${ true eq isTest }">
 <script src="../resources/test/replytest.js"></script>
