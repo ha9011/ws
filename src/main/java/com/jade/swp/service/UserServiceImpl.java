@@ -1,5 +1,7 @@
 package com.jade.swp.service;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(LoginDTO dto) throws Exception {
 		return dao.login(dto);
+	}
+
+	@Override
+	public void keepLogin(String uid, String id, Date expire) {
+		dao.keepLogin(uid, id, expire);
 	}
 
 }

@@ -48,7 +48,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter implements Sessi
 			if (StringUtils.isNotEmpty(request.getParameter("useCookie"))) {
 				Cookie loginCookie = new Cookie(LOGIN_COOKIE, session.getId());
 				loginCookie.setPath("/");
-				loginCookie.setMaxAge(7 * 24 * 60 * 60);
+				loginCookie.setMaxAge(EXPIRE);
 				
 				response.addCookie(loginCookie);
 			}

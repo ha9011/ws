@@ -57,12 +57,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-	public void loginPost(LoginDTO dto, Model model) throws Exception {
+	public void loginPost(LoginDTO dto, Model model, HttpSession session) throws Exception {
 		logger.info("loginPost...LoginDTO={}", dto); 
 		
 		try {
 			User user = service.login(dto);
-			if (user != null) { 
+			if (user != null) {
+				Date expire = new Date(System.currentTimeMillis() + SessionNames.EXPIRE * 1000);
+				service.keepLogin(user.getUid(), session.getId(), expire);
 				model.addAttribute("user", user);
 				
 			} else {
