@@ -33,6 +33,24 @@ public class UserController {
 	@Inject
 	private UserService service;
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("logout GET .....");
+		session.removeAttribute(SessionNames.LOGIN);
+		session.invalidate();
+		
+		Cookie loginCookie = WebUtils.getCookie(request, SessionNames.LOGIN);
+		if (loginCookie != null) {
+			loginCookie.setPath("/");
+			loginCookie.setMaxAge(0);
+			
+			response.addCookie(loginCookie);
+		}
+		
+		return "/login";
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void login() throws Exception {
 		logger.info("login GET .....");

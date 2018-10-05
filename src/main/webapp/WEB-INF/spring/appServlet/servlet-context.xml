@@ -36,6 +36,7 @@
     
     <beans:bean id="sampleInterceptor" class="com.jade.swp.interceptor.SampleInterceptor"/>
     <beans:bean id="loginInterceptor" class="com.jade.swp.interceptor.LoginInterceptor"/>
+    <beans:bean id="authInterceptor" class="com.jade.swp.interceptor.AuthInterceptor"/>
 
     <interceptors>
        <interceptor>
@@ -46,6 +47,13 @@
        <interceptor>
            <mapping path="/loginPost" />
            <beans:ref bean="loginInterceptor" />
+       </interceptor>
+       
+       <interceptor>
+           <mapping path="/board/register" />
+           <mapping path="/board/update" />
+           <mapping path="/board/remove" />
+           <beans:ref bean="authInterceptor" />
        </interceptor>
     </interceptors>
   

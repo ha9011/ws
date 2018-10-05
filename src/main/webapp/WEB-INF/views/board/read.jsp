@@ -85,10 +85,12 @@
 	</script>
 
 	<div class="box-footer text-center">
+	  <c:if test="${ loginUser.uid == board.writer }">
 		<button id="btn-remove-read" class="btn btn-danger">삭제</button>
 		<a href="/board/update${criteria.makeQuery()}&bno=${ board.bno }"
-			class="btn btn-primary">수정</a> <a
-			href="/board/listPage${criteria.makeQuery()}" class="btn btn-default">목록</a>
+			class="btn btn-primary">수정</a>
+	  </c:if>
+		<a href="/board/listPage${criteria.makeQuery()}" class="btn btn-default">목록</a>
 	</div>
 </section>
 

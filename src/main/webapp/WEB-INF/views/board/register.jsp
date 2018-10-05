@@ -19,8 +19,8 @@
 
 			<div class="form-group">
 				<label for="writer">작성자</label>
-				<input type="text" id="writer"
-					name="writer" class="form-control" />
+				<input type="text" id="writer" value="${ loginUser.uid }"
+					name="writer" class="form-control" readonly />
 			</div>
 			
 			<div class="form-group">
@@ -51,9 +51,5 @@
     </form>
 
 
-<script src="/resources/upload.js?ver=1"></script>
-<script>
-gIsEditing = true;
-</script>
 <%@ include file="../footer.jsp"%>
 </html>

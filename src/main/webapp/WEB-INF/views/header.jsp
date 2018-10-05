@@ -39,7 +39,7 @@
     <script src="/resources/ajax.js?ver=1"></script>
     
     
-  <body class="skin-blue sidebar-mini">
+  <body class="skin-blue sidebar-mini sidebar-collapse">
     <div class="wrapper">
       
       <header class="main-header">
@@ -253,14 +253,20 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="/resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">${ loginUser.uname }</span>
+                  <span class="hidden-xs">
+                  <% if (session.getAttribute("loginUser") == null) { %>
+                    Please Sign In
+                  <% } else { %>
+                    ${ loginUser.uname }
+                  <% } %>
+                  </span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                     <p>
-                      Alexander Pierce - Web Developer
+                      ${ loginUser.uname } 
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
@@ -282,7 +288,7 @@
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -305,7 +311,7 @@
               <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>${ loginUser.uname }</p>
 
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -323,6 +329,16 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            <li class="treeview">
+              <a href="/login">
+                <i class="fa fa-user"></i> <span>Sing In</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="/board/listPage">
+                <i class="fa fa-clipboard"></i> <span>Board</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>

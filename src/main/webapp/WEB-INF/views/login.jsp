@@ -5,19 +5,19 @@
 
 	<form role="form" action="/loginPost" method="post">
 		<div class="box-body">
-			<div class="form-group">
-				<input type="text" id="uid"
+			<div class="form-group"> <!-- QQQQQ --> 
+				<input type="text" id="uid" value="user1"
 					name="uid" class="form-control" placeholder="User ID..." />
 			</div>
 
 			<div class="form-group">
-				<input type="password" name="upw" id="upw"
+				<input type="password" name="upw" id="upw" value="1234"
 					class="form-control" placeholder="Password..."/>
 			</div>
 			
 			<div class="form-group">
 			     <label for="useCookie">
-			         <input type="checkbox" id="useCookie" name="useCookie" /> Rememeber Me
+			         <input type="checkbox" id="useCookie" name="useCookie" value="true" /> Rememeber Me
 			     </label>
 			</div>
 		
