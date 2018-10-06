@@ -53,6 +53,7 @@
            <mapping path="/board/register" />
            <mapping path="/board/update" />
            <mapping path="/board/remove" />
+           <mapping path="/replies/register" />
            <beans:ref bean="authInterceptor" />
        </interceptor>
     </interceptors>

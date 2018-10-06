@@ -46,6 +46,9 @@ public class UserController {
 			loginCookie.setMaxAge(0);
 			
 			response.addCookie(loginCookie);
+			
+			User user = (User)session.getAttribute(SessionNames.LOGIN);
+			service.keepLogin(user.getUid(), session.getId(), new Date());
 		}
 		
 		return "/login";

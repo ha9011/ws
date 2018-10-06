@@ -37,6 +37,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter implements Sessio
 				}
 			}
 			
+			String uri = request.getRequestURI();
+			String httpMethod = request.getMethod();
+			if (StringUtils.contains(uri, "/replies/") 
+					&& !StringUtils.equalsIgnoreCase(httpMethod, "GET")) {
+				response.sendError(401, "Need Login");
+				return false;
+			}
+			
 			saveAttemptedLocation(request, session);
 			
 			response.sendRedirect("/login");

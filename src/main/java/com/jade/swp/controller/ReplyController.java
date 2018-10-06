@@ -43,16 +43,16 @@ public class ReplyController {
 		
 		logger.info("ReplyController.POST={}", loginUser);
 		try {
-			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-			if (loginUser == null && loginCookie == null) {
-				return new ResponseEntity<>("Not LoggedIn", HttpStatus.UNAUTHORIZED);
-				
-			} else if (loginCookie != null) {
-				loginUser = new User();
-				loginUser.setUid("user1");
-			}
+//			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+//			if (loginUser == null && loginCookie == null) {
+//				return new ResponseEntity<>("Not LoggedIn", HttpStatus.UNAUTHORIZED);
+//				
+//			} else if (loginCookie != null) {
+//				loginUser = new User();
+//				loginUser.setUid("user1");
+//			}
 			
-			reply.setReplyer(loginUser.getUid());
+//			reply.setReplyer(loginUser.getUid());
 			service.addReply(reply);
 			return new ResponseEntity<>("success111", HttpStatus.OK);
 		} catch (Exception e) {
