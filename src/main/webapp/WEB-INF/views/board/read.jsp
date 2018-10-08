@@ -147,6 +147,7 @@ $(document).ready(	function() {
 	});
 	
 	listPage(1, '${board.bno}'); // QQQ
+	gBno = '${board.bno}';
 
 	//$('#myModal').modal('show');
 	
