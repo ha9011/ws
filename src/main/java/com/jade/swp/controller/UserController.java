@@ -37,6 +37,7 @@ public class UserController {
 	public String logout(HttpSession session, 
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("logout GET .....");
+		logger.debug("TTTTTTTTTTT My Own Code");
 		session.removeAttribute(SessionNames.LOGIN);
 		session.invalidate();
 		
