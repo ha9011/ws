@@ -38,6 +38,7 @@ public class UserController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("logout GET .....");
 		logger.debug("TTTTTTTTTTT My Own Code");
+		logger.info("Master Edited!!");
 		session.removeAttribute(SessionNames.LOGIN);
 		session.invalidate();
 		
