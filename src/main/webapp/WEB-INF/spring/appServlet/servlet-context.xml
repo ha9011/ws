@@ -31,7 +31,10 @@
         <beans:property name="maxUploadSize" value="10485760"></beans:property>
     </beans:bean>
     <beans:bean id="uploadPath" class="java.lang.String">
-        <beans:constructor-arg value="/Users/jade/workspace/lecture/tjespring/uploads"></beans:constructor-arg>
+        <beans:constructor-arg value="/Users/jade/workspace/lecture/tjespring/uploads"/>
+    </beans:bean>
+    <beans:bean id="uploadDirectPath" class="java.lang.String">
+        <beans:constructor-arg value="/Library/WebServer/Documents/uploads"/>
     </beans:bean>
     
     <beans:bean id="sampleInterceptor" class="com.jade.swp.interceptor.SampleInterceptor"/>

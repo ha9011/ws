@@ -82,7 +82,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String updatePost(Board board, Criteria criteria, RedirectAttributes rttr) throws Exception {
-		logger.info("update POST ..... {}", board.getBno());
+		logger.info("update POST ..... {}", board);
 		service.modify(board);
 		rttr.addFlashAttribute("msg", "save-ok");
 		rttr.addAttribute("page", criteria.getPage());

@@ -152,6 +152,8 @@ $(document).ready(	function() {
 	//$('#myModal').modal('show');
 	
     showAttaches(${board.bno});	
+    
+    gIsDirect = true;
 });
 </script>
 

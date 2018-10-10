@@ -35,6 +35,9 @@ public class UploadController {
 	
 	@Resource(name = "uploadPath")
 	private String uploadPath;
+	
+	@Resource(name = "uploadDirectPath")
+	private String uploadDirectPath;
 
 	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
 	public void uploadFormGET() throws Exception {
@@ -60,17 +63,19 @@ public class UploadController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/uploadAjaxes", method = RequestMethod.POST)
-	public ResponseEntity<String[]> uploadFormAJAXes(MultipartFile[] files, Integer bno) throws Exception {
+	public ResponseEntity<String[]> uploadFormAJAXes(MultipartFile[] files,
+			Integer bno, boolean isdirect) throws Exception {
 		int len = files == null ? 0 : files.length;
-		logger.info("upload AJAXes .....files.length={}, bno={}", len, bno); 
+		logger.info("upload AJAXes .....files.length={}, bno={}, isdirect={}", len, bno, isdirect); 
 		
 		try {
 			String[] uploadedFiles = new String[len];
+			String updir = isdirect ? uploadDirectPath : uploadPath;
 			for (int i = 0; i < len; i++) {
-				uploadedFiles[i] = FileUtils.uploadFile(files[i], uploadPath);
+				uploadedFiles[i] = FileUtils.uploadFile(files[i], updir);
 			}
 			
-			if (bno > 0 ) {
+			if (bno != null) {
 				service.appendAttach(uploadedFiles, bno);
 			}
 			
@@ -93,6 +98,9 @@ public class UploadController {
 			
 			boolean isImage = FileUtils.getMediaType(FileUtils.getFileExtension(fileName)) != null;
 			File file = new File(uploadPath + fileName);
+			if (!file.exists())
+				file = new File(uploadDirectPath + fileName);
+			
 			file.delete();
 			
 			// image면 원본 이미지도 삭제!
@@ -112,8 +120,8 @@ public class UploadController {
 	
 	@ResponseBody
 	@RequestMapping("/displayFile")
-	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-		logger.info("display File .....fileName={}", fileName);
+	public ResponseEntity<byte[]> displayFile(String fileName, boolean isdirect) throws Exception {
+		logger.info("display File .....fileName={}, isdirect={}", fileName, isdirect);
 		
 		InputStream in = null;
 		try {
@@ -121,7 +129,8 @@ public class UploadController {
 			MediaType mType = FileUtils.getMediaType(formatName);
 			HttpHeaders headers = new HttpHeaders();
 			
-			File file = new File(uploadPath + fileName);
+			String updir = isdirect ? uploadDirectPath : uploadPath;
+			File file = new File(updir + fileName);
 			logger.info("exists={}", file.exists());
 			if (!file.exists())
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
