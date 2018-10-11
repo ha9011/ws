@@ -54,14 +54,14 @@ public class UserController {
 	@Inject
 	private OAuth2Parameters googleOAuth2Parameters;
 	
-	@RequestMapping(value = "/auth/{service}/callback", 
+	@RequestMapping(value = "/auth/{snsService}/callback", 
 			method = { RequestMethod.GET, RequestMethod.POST})
-	public String snsLoginCallback(@PathVariable String service,
-			Model model, @RequestParam String code) throws Exception {
+	public String snsLoginCallback(@PathVariable String snsService,
+			Model model, @RequestParam String code, HttpSession session) throws Exception {
 		
-		logger.info("snsLoginCallback: service={}", service);
+		logger.info("snsLoginCallback: service={}", snsService);
 		SnsValue sns = null;
-		if (StringUtils.equals("naver", service))
+		if (StringUtils.equals("naver", snsService))
 			sns = naverSns;
 		else
 			sns = googleSns;
@@ -74,8 +74,19 @@ public class UserController {
 		System.out.println("Profile>>" + snsUser);
 		
 		// 3. DB 해당 유저가 존재하는 체크 (googleid, naverid 컬럼 추가)
+		User user = service.getBySns(snsUser);
+		if (user == null) {
+			model.addAttribute("result", "존재하지 않는 사용자입니다. 가입해 주세요.");
+			
+			//미존재시 가입페이지로!!
+			
+		} else {
+			model.addAttribute("result", user.getUname() + "님 반갑습니다.");
+			
+			// 4. 존재시 강제로그인
+			session.setAttribute(SessionNames.LOGIN, user);
+		}
 		
-		// 4. 존재시 강제로그인, 미존재시 가입페이지로!!
 		
 		return "loginResult";
 	}
