@@ -10,6 +10,11 @@ public class User {
 	private String uname;
 	private Integer upoint;
 	
+	private String email;
+	private String googleid;
+	private String naverid;
+	private String nickname;
+	
 	public static void main(String[] args) {
 		User user1 = new User();
 		user1.setUid("1111111");

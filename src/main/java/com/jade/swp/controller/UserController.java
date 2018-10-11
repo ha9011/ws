@@ -58,9 +58,8 @@ public class UserController {
 		// 1. code를 이용해서 access_token 받기
 		// 2. access_token을 이용해서 사용자 profile 정보 가져오기
 		SNSLogin snsLogin = new SNSLogin(googleSns);
-		String profile = snsLogin.getUserProfile(code); // 1,2번 동시
-		System.out.println("Profile>>" + profile);
-		model.addAttribute("result", profile);
+		User snsUser = snsLogin.getUserProfile(code); // 1,2번 동시
+		System.out.println("Profile>>" + snsUser);
 		
 		// 3. DB 해당 유저가 존재하는 체크 (googleid, naverid 컬럼 추가)
 		
