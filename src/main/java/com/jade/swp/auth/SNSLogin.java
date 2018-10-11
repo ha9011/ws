@@ -43,6 +43,7 @@ public class SNSLogin {
 	}
 
 	private User parseJson(String body) throws Exception {
+		System.out.println("============================\n" + body + "\n==================");
 		User user = new User();
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -68,7 +69,10 @@ public class SNSLogin {
 			}
 			
 		} else if (this.sns.isNaver()) {
-			
+			JsonNode resNode = rootNode.get("response");
+			user.setNaverid(resNode.get("id").asText());
+			user.setNickname(resNode.get("nickname").asText());
+			user.setEmail(resNode.get("email").asText());
 		}
 		
 		return user;

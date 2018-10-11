@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,12 +54,22 @@ public class UserController {
 	@Inject
 	private OAuth2Parameters googleOAuth2Parameters;
 	
-	@RequestMapping(value = "/auth/google/callback", 
+	@RequestMapping(value = "/auth/{service}/callback", 
 			method = { RequestMethod.GET, RequestMethod.POST})
-	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+	public String snsLoginCallback(@PathVariable String service,
+			Model model, @RequestParam String code) throws Exception {
+		
+		logger.info("snsLoginCallback: service={}", service);
+		SnsValue sns = null;
+		if (StringUtils.equals("naver", service))
+			sns = naverSns;
+		else
+			sns = googleSns;
+		
 		// 1. code를 이용해서 access_token 받기
 		// 2. access_token을 이용해서 사용자 profile 정보 가져오기
-		SNSLogin snsLogin = new SNSLogin(googleSns);
+		SNSLogin snsLogin = new SNSLogin(sns);
+		
 		User snsUser = snsLogin.getUserProfile(code); // 1,2번 동시
 		System.out.println("Profile>>" + snsUser);
 		
