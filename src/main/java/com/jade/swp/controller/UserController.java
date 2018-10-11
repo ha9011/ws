@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
@@ -50,6 +51,23 @@ public class UserController {
 	
 	@Inject
 	private OAuth2Parameters googleOAuth2Parameters;
+	
+	@RequestMapping(value = "/auth/google/callback", 
+			method = { RequestMethod.GET, RequestMethod.POST})
+	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+		// 1. code를 이용해서 access_token 받기
+		// 2. access_token을 이용해서 사용자 profile 정보 가져오기
+		SNSLogin snsLogin = new SNSLogin(googleSns);
+		String profile = snsLogin.getUserProfile(code); // 1,2번 동시
+		System.out.println("Profile>>" + profile);
+		model.addAttribute("result", profile);
+		
+		// 3. DB 해당 유저가 존재하는 체크 (googleid, naverid 컬럼 추가)
+		
+		// 4. 존재시 강제로그인, 미존재시 가입페이지로!!
+		
+		return "loginResult";
+	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, 
