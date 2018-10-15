@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jade.mapper.SampleMapper;
 import com.jade.swp.domain.Board;
 import com.jade.swp.domain.Criteria;
 import com.jade.swp.persistence.BoardDAO;
@@ -21,6 +22,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Inject
 	private ReplyDAO replyDao;
+	
+	@Inject
+	private SampleMapper sampleMapper;
 
 	@Transactional
 	@Override
@@ -94,6 +98,16 @@ public class BoardServiceImpl implements BoardService {
 	public void appendAttach(String[] fullNames, Integer bno) {
 		for (String fullName : fullNames)
 			dao.appendAttach(fullName, bno);
+	}
+
+	@Override
+	public String getTime() {
+		return sampleMapper.getTime();
+	}
+
+	@Override
+	public String getUname(String uid) {
+		return sampleMapper.getUname(uid);
 	}
 
 }

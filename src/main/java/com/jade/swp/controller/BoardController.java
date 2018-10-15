@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jade.swp.domain.Board;
 import com.jade.swp.domain.Criteria;
 import com.jade.swp.domain.PageMaker;
+import com.jade.swp.domain.User;
+import com.jade.swp.interceptor.SessionNames;
 import com.jade.swp.service.BoardService;
 
 @Controller
@@ -112,7 +115,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/listPage", method = RequestMethod.GET)
-	public void listPage(Criteria criteria, Model model) throws Exception {
+	public void listPage(Criteria criteria, Model model, HttpSession session) throws Exception {
 		logger.info(">>>> listPage {}", criteria);
 		List<Board> boards = service.listCriteria(criteria);
 		model.addAttribute("list", boards);
@@ -123,6 +126,15 @@ public class BoardController {
 		logger.debug("totalCount=" + totalCount);
 		pageMaker.setTotalCount(totalCount);
 		model.addAttribute("pageMaker", pageMaker);
+		
+		String now = service.getTime();
+		model.addAttribute("NOW", now);
+		
+		User loginUser = (User)session.getAttribute(SessionNames.LOGIN);
+		if (null != loginUser) {
+			String uname = service.getUname(loginUser.getUid());
+			model.addAttribute("UNAME", uname);
+		}
 	}
 	
 	@RequestMapping(value = "/dummy10", method = RequestMethod.GET)

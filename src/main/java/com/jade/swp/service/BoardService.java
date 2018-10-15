@@ -27,4 +27,8 @@ public interface BoardService {
 	void removeAttach(String fileName);
 
 	void appendAttach(String[] fullNames, Integer bno);
+
+	String getTime();
+
+	String getUname(String uid);
 }
