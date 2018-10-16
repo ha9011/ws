@@ -48,7 +48,7 @@
 		        value="${pageMaker.criteria.keyword}" placeholder="검색어를 입력하세요..." />
 		       <button id="searchBtn" class="btn btn-primary">Search</button>
 		       
-		       <span class="ml10">${ NOW } - ${ UNAME } logined</span>
+		       <span class="ml10">${ loginTime } - ${ UNAME } logined (IP: ${ loginIP })</span>
 		    </div>
 	    </div>
 	    

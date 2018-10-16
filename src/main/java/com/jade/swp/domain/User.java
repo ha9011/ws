@@ -1,5 +1,7 @@
 package com.jade.swp.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,9 @@ public class User {
 	private String googleid;
 	private String naverid;
 	private String nickname;
+	
+	private String loginip;
+	private Date lastlogin;
 	
 	public static void main(String[] args) {
 		User user1 = new User();

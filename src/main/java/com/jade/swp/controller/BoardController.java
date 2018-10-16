@@ -134,6 +134,11 @@ public class BoardController {
 		if (null != loginUser) {
 			String uname = service.getUname(loginUser.getUid());
 			model.addAttribute("UNAME", uname);
+			
+			// select * from User where uid = #{uid}
+			User loginInfoUser = service.getLoginInfo(loginUser.getUid());
+			model.addAttribute("loginIP", loginInfoUser.getLoginip());
+			model.addAttribute("loginTime", loginInfoUser.getLastlogin());
 		}
 	}
 	

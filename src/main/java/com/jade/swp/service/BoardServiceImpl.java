@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jade.mapper.SampleMapper;
 import com.jade.swp.domain.Board;
 import com.jade.swp.domain.Criteria;
+import com.jade.swp.domain.User;
 import com.jade.swp.persistence.BoardDAO;
 import com.jade.swp.persistence.ReplyDAO;
 
@@ -101,13 +102,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public String getTime() {
+	public String getTime() throws Exception {
 		return sampleMapper.getTime();
 	}
 
 	@Override
-	public String getUname(String uid) {
+	public String getUname(String uid) throws Exception {
 		return sampleMapper.getUname(uid);
+	}
+
+	@Override
+	public User getLoginInfo(String uid) throws Exception {
+		return sampleMapper.getLoginInfo(uid);
 	}
 
 }
