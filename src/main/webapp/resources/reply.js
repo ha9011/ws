@@ -1,5 +1,6 @@
 const REGIST_URL = "/replies/";
 let gBno = 0,
+	gBoardWriter = null,
 	gPage = null,
 	gIsEdit = false,
 	gRno = 0,
@@ -109,6 +110,7 @@ function closeMod() {
 	$('#myModal').modal('hide');
 }
 
+// 댓글 쓰기부분!!
 function save() {
 	let jsonData = getValidData( $('#replyer'), $('#replytext') );
 	if (!jsonData) return;
@@ -126,6 +128,14 @@ function save() {
 			alert(resultMsg);
 			listPage(gIsEdit ? gPage : 1);
 			closeMod();
+			
+			console.debug("reply.js::socket>>", socket)
+			if (socket) {
+				// websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
+				let socketMsg = "reply," + jsonData.replyer + "," + gBoardWriter + "," + gBno;
+				console.debug("sssssssmsg>>", socketMsg)
+				socket.send(socketMsg);
+			}
 		} else {
 			console.debug("Error on editReply>>", res);
 		}

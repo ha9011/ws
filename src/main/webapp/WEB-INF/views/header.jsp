@@ -40,6 +40,8 @@
     
     
   <body class="skin-blue sidebar-mini sidebar-collapse">
+    <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+    
     <div class="wrapper">
       
       <header class="main-header">

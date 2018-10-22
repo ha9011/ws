@@ -94,6 +94,11 @@
 	  </c:if>
 		<a href="/board/listPage${criteria.makeQuery()}" class="btn btn-default">목록</a>
 	</div>
+	
+	<div class="well">
+	   <input type="text" id="msg" value="1212" class="form-control" />
+	   <button id="btnSend" class="btn btn-primary">Send Message</button>
+	</div>
 </section>
 
 <script type="text/x-handlebars-template" class="modal fade" id="myModal">
@@ -130,7 +135,7 @@
   </div>
 </script>
 
-<script src="../resources/reply.js?ver=6"></script>
+<script src="../resources/reply.js?ver=7"></script>
 
 <c:if test="${ true eq isTest }">
 <script src="../resources/test/replytest.js"></script>
@@ -148,16 +153,24 @@ $(document).ready(	function() {
 	
 	listPage(1, '${board.bno}'); // QQQ
 	gBno = '${board.bno}';
+	gBoardWriter = '${board.writer}';
 
 	//$('#myModal').modal('show');
 	
     showAttaches(${board.bno});	
     
     gIsDirect = true;
+    
+    $('#btnSend').on('click', function(evt) {
+    	evt.preventDefault();
+    	if (socket.readyState !== 1) return;
+    	
+   	    let msg = $('input#msg').val();
+   	    socket.send(msg);
+   	});
+    
 });
 </script>
-
-
 
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <script type="text/babel">
