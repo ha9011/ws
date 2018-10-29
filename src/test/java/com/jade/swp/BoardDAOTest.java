@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -89,7 +90,7 @@ public class BoardDAOTest {
 		logger.info(dao.read(maxbno).toString());
 	}
 
-	@After
+	@Ignore @After
 	public void testDelete() throws Exception {
 		if (didUpdate) {
 			dao.delete(maxbno);
